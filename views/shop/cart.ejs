@@ -1,0 +1,43 @@
+<%- include('../includes/start.ejs') %>
+<link rel="stylesheet" href="/css/cart.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if(products.length > 0) { %>
+            <div class="cart-container">
+                    <% for(let product of products) { %>
+                        <div class="cart-item">
+                            <img src="<%= product.imgUrl %>" alt="Product Image">
+                            <div class="cart-item-details">
+                                <div class="cart-item-info">
+                                    <p class="cart-item-name"><%= product.title %></p>
+                                    <p class="cart-item-quantity">Quantity: <%= product.quantity %></p>
+                                </div>
+                            </div>
+                            <div class="cart-item-actions">
+                            <form action="/cart-delete-item" method="post">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="delete-product">
+                                    <i class="fas fa-trash"></i>Delete
+                                </button>
+                                <input type="hidden" name="productId" value="<%= product._id %>">
+                            </form>
+                            </div>
+                        </div>
+                    <% } %>
+            <hr>
+            <div class="centered">
+                <form action="/create-order" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="order-now">Order Now!</button>
+                </form>
+            </div>
+        </div>
+        <% } else { %>
+            <h1>No Products in Cart!</h1>
+        <% } %>
+    </main>
+
+<%- include('../includes/end.ejs') %>

@@ -1,0 +1,47 @@
+<%- include('../includes/start.ejs') %>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if(errorMessage) {%>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% }%>   
+        <div class="signin-container">
+
+
+
+            
+        <form class="signin-form" action="/signup" method="POST" novalidate>
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="name" id="name" value="<%= oldInput.name %>" placeholder="User name">
+            </div>
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input 
+                class="<%= errors.find(e=> e.path === 'email') ? 'invalid' : '' %>"
+                type="email" name="email" id="email" value="<%= oldInput.email %>" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input 
+                class="<%= errors.find(e=> e.path === 'password') ? 'invalid' : '' %>"
+                type="password" name="password" id="password" value="<%= oldInput.password %>" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input 
+                class="<%= errors.find(e=> e.path === 'confirmPassword') ? 'invalid' : '' %>"
+                type="password" name="confirmPassword" id="confirmPassword" value="<%= oldInput.confirmPassword %>" placeholder="Confirm Password">
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="signin-button" type="submit">
+                <i class="fas fa-sign-in-alt"></i>Sign Up
+            </button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

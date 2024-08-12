@@ -1,0 +1,48 @@
+<%- include('../includes/start.ejs') %>
+<link rel="stylesheet" href="/css/card.css">
+<link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    </header>
+    <main>
+        <h2>Welcome <%= userName %></h2>
+        <hr>
+        <h4>Your products : </h4>
+        <% if(hasProducts){ %>
+        <div class="card-container">
+        <% prods.forEach(function (value, i){ %>
+        <div class="card">
+            <img src="<%= value.imgUrl %>" alt="Product Image" />
+            <div class="card-details">
+                <p class="product-name"><%= value.title %></p>
+                <p class="price"><%= value.price-(value.discount/100)*value.price %></p>
+                <% if(value.discount){ %>
+                <p class="discount"><i class="fas fa-tag"></i><%= value.discount %>% Off</p>
+                <% } %>
+            </div>
+            <% if(isAuthenticated){ %>
+                <form action="/editProduct" method="get">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="productId" value="<%= value._id %>">
+                    <button type="submit" class="edit-product">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </form>
+                <form action="/deleteProduct" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="productId" value="<%= value._id %>">
+                    <button type="submit" class="delete-product">
+                        <i class="fas fa-trash-alt"></i>Delete
+                    </button>
+                </form>
+            <% } %>
+        </div>
+        <% }) %>
+    </div>
+        <% }else{ %>
+            <h1>No products for now</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>

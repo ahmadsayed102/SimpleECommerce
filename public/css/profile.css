@@ -1,0 +1,67 @@
+h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+}
+
+h2::before {
+    content: "\f007"; /* Font Awesome user icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #007bff; /* Blue color for the icon */
+}
+
+h4 {
+    color: #495057;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
+h4::before {
+    content: "\f0c8"; /* Font Awesome tag icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1.2em;
+    margin-right: 10px;
+    color: #28a745; /* Green color for the icon */
+}
+
+/* Horizontal Rule */
+hr {
+    border: 0;
+    border-top: 2px solid #dee2e6;
+    margin: 20px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+hr::before {
+    content: "\f0c9"; /* Font Awesome barcode icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1.5em;
+    color: #343a40; /* Dark color for the icon */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f8f9fa; /* Background color to blend with the main background */
+    padding: 0 10px;
+    z-index: 1;
+}
+
+hr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    border-top: 2px solid #dee2e6;
+    position: relative;
+    top: 0;
+    z-index: 0;
+}

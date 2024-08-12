@@ -1,0 +1,20 @@
+<header class="main-header">
+    <nav class="navbar">
+      <div class="logo">MyShop</div>
+      <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+      <ul>
+        <% if(isAuthenticated) { %>
+        <li><a class="<%= path==='/profile'?'active':'' %>" href="/profile"><i class="fas fa-home"></i>Profile</a></li>
+        <li><a class="<%= path==='/'?'active':'' %>" href="/"><i class="fas fa-shop"></i>Shop</a></li>
+        <li><a class="<%= path==='/add-product'?'active':'' %>" href="/add-product">Add product</a></li>
+        <li><a class="<%= path==='/cart'?'active':'' %>" href="/cart"><i class="fas fa-shopping-cart"></i>Cart</a></li>
+        <li><a class="<%= path==='/orders'?'active':'' %>" href="/orders">Orders</a></li>
+        <li><a class="<%= path==='/logout'?'active':'' %>" href="/logout">Logout</a></li>
+        <% }else{ %>
+        <li><a class="<%= path==='/'?'active':'' %>" href="/">Shop</a></li>
+        <li><a class="<%= path==='login'?'active':'' %>" href="/login"><i class="fas fa-sign-in-alt"></i>Login</a></li>
+        <li><a class="<%= path==='signup'?'active':'' %>" href="/signup"><i class="fas fa-user-plus"></i>SignUp</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </header>
