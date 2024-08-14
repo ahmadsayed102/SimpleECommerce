@@ -52,7 +52,7 @@ exports.postAddProduct =(req, res, next) => {
 exports.getProducts = (req, res, next) => {
     const page = req.query.page || 1
     let totalNumber 
-    Product.find().countDocuments().then(prodNum=>{
+    Product.find({user: {$ne : req.user}}).countDocuments().then(prodNum=>{
         totalNumber = prodNum
         return Product.find({user: {$ne : req.user}})
                 .skip((page-1)*ItemPerPage).limit(ItemPerPage)
