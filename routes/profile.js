@@ -8,8 +8,10 @@ const isAuth = require('../middleware/is-auth')
 router.get('/profile', isAuth, profileController.getProfile)
 
 router.get('/editProduct', isAuth, profileController.getEditProduct)
-router.post('/editProduct', isAuth, profileController.postEditProduct)
+router.post('/editProduct', isAuth, body('price').isFloat()
+    , body('title').isLength({min:1}).trim(),
+    body('discount').isNumeric().trim(), profileController.postEditProduct)
 
-router.post('/deleteProduct', isAuth, profileController.postdeleteProduct)
+router.delete('/profile/:productId', isAuth, profileController.deleteProduct)
 
 exports.routes = router;

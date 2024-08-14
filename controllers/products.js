@@ -3,9 +3,10 @@ const path = require('path')
 const PDFDocument = require('pdfkit')
 
 const Product = require('../models/product');
-const User = require('../models/user');
 const Order = require('../models/order');
 const validRes = require('express-validator').validationResult
+
+const ItemPerPage = 1
 
 exports.getAddProduct = (req, res, next) => {
     res.render('add-product', {
@@ -40,7 +41,7 @@ exports.postAddProduct =(req, res, next) => {
             oldInput :  {title: title, price: price, discount: discount}
         })
     }
-    const imgUrl = '/'+image.path
+    const imgUrl = path.join(image.path)
     const product = new Product({title : title , price : price, imgUrl:imgUrl, discount:discount, user:req.session.user})
     product.save()
     .then(()=>{
@@ -49,14 +50,23 @@ exports.postAddProduct =(req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-    Product.find({user: {$ne : req.user}}).then( (prods) =>{
+    const page = req.query.page || 1
+    let totalNumber 
+    Product.find().countDocuments().then(prodNum=>{
+        totalNumber = prodNum
+        return Product.find({user: {$ne : req.user}})
+                .skip((page-1)*ItemPerPage).limit(ItemPerPage)
+    })
+    .then( (prods) =>{
     res.render('shop', {
         prods : prods,
         pagetitle : 'SHOP',
         path : '/',
         hasProducts : prods.length > 0,
-        activeShop : true,
-        activeCSS : true
+        currentPage : page,
+        nextPage : totalNumber > page*ItemPerPage,
+        previousPage : page > 1,
+        lastPage : Math.ceil(totalNumber/ItemPerPage)
     })})
 }
 module.exports.postCart = (req, res, next) => {

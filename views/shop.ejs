@@ -6,20 +6,20 @@
     <%- include('includes/navigation.ejs') %>
     </header>
     <main>
-        
+
         <% if(hasProducts){ %>
         <div class="card-container">
-        <% prods.forEach(function (value, i){ %>
-        <div class="card">
-            <img src="<%= value.imgUrl %>" alt="Product Image"  />
-            <div class="card-details">
-                <p class="product-name"><%= value.title %></p>
-                <p class="price"><%= value.price-(value.discount/100)*value.price %></p>
-                <% if(value.discount){ %>
+            <% prods.forEach(function (value, i){ %>
+            <div class="card">
+                <img src="<%= value.imgUrl %>" alt="Product Image" />
+                <div class="card-details">
+                    <p class="product-name"><%= value.title %></p>
+                    <p class="price"><%= value.price-(value.discount/100)*value.price %></p>
+                    <% if(value.discount){ %>
                     <p class="discount"><i class="fas fa-tag"></i><%= value.discount %>% Off</p>
-                    <% } %>            
-            </div>
-            <% if(isAuthenticated){ %>
+                    <% } %>
+                </div>
+                <% if(isAuthenticated){ %>
                 <form action="/addToCart" method="post">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" name="productId" value="<%= value._id %>">
@@ -27,12 +27,26 @@
                         <i class="fas fa-cart-plus"></i>Add to Cart
                     </button>
                 </form>
+                <% } %>
+            </div>
+            <% }) %>
+        </div>
+
+        <div class="center">
+        <div class="pagination">
+            <% if(currentPage != 1){ %>
+            <a href="?page=<%= currentPage-1 %>">&laquo;</a>
+            <a href="?page=1">1</a>
+            <% } %>
+            <a href="/?page=<%= currentPage %>" class="active"><%= currentPage %></a>
+            <% if(currentPage != lastPage){ %>
+                <a href="?page=<%= lastPage %>" ><%= lastPage %></a>
+                <a href="?page=<%= 1+ +currentPage %>">&raquo;</a>
             <% } %>
         </div>
-        <% }) %>
-    </div>
+        </div>
         <% }else{ %>
-            <h1>No products for now</h1>
+        <h1>No products for now</h1>
         <% } %>
     </main>
-<%- include('includes/end.ejs') %>
+    <%- include('includes/end.ejs') %>

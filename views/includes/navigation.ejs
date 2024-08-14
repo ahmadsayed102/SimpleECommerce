@@ -5,7 +5,7 @@
       <ul>
         <% if(isAuthenticated) { %>
         <li><a class="<%= path==='/profile'?'active':'' %>" href="/profile"><i class="fas fa-home"></i>Profile</a></li>
-        <li><a class="<%= path==='/'?'active':'' %>" href="/"><i class="fas fa-shop"></i>Shop</a></li>
+        <li><a class="<%= path==='/'?'active':'' %>" href="/?page=1"><i class="fas fa-shop"></i>Shop</a></li>
         <li><a class="<%= path==='/add-product'?'active':'' %>" href="/add-product">Add product</a></li>
         <li><a class="<%= path==='/cart'?'active':'' %>" href="/cart"><i class="fas fa-shopping-cart"></i>Cart</a></li>
         <li><a class="<%= path==='/orders'?'active':'' %>" href="/orders">Orders</a></li>

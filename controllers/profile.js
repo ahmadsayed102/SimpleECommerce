@@ -1,3 +1,4 @@
+const path = require('path')
 const User = require('../models/user')
 const Product = require('../models/product')
 const user = require('../models/user')
@@ -17,15 +18,17 @@ exports.getProfile = (req, res, next) => {
         })})
 }
 
-exports.postdeleteProduct = (req, res, next) => {
-    Product.findById( req.body.productId).then(prod=>{
-        if(!prod) return res.redirect('404')
-        return Product.deleteOne({_id : prod._id, userId : user._id})
-    })
-    .then( (result) =>{
-        return res.redirect('profile')
+exports.deleteProduct = (req, res, next) => {
+    Product.findById( req.params.productId).then(prod=>{
+        if(!prod) return res.status(500).json({message : 'Deleting failed'})
+        fileHelper.deleteFile(prod.imgUrl)
+        Product.deleteOne({_id : prod._id, userId : user._id})
+        .then(resu =>{
+            res.status(200).json({message : 'Success'})
+        })
     })
 }
+
 module.exports.getEditProduct = (req, res, next) => {
     const productId = req.query.productId;
     Product
@@ -42,12 +45,9 @@ module.exports.getEditProduct = (req, res, next) => {
                     validationErrors: []
                 });
             }
-        })
+        })  
 };
 
-
-
-/////
 module.exports.postEditProduct = (req, res, next) => {
     const productId = req.body.productId;
     const productTitle = req.body.title;
@@ -63,7 +63,7 @@ module.exports.postEditProduct = (req, res, next) => {
                 path: '/editProduct',
                 editing: true,
                 errorMessage: errors.array().map(error => error.msg),
-                product: {
+                oldInput: {
                     _id: productId,
                     title: productTitle,
                     price: productPrice,
@@ -82,7 +82,7 @@ module.exports.postEditProduct = (req, res, next) => {
                 product.price = productPrice;
                 if(productImage) {
                     fileHelper.deleteFile(product.imgUrl);
-                    product.imgUrl = productImage.path;
+                    product.imgUrl = path.join( productImage.path);
                 }
                 product.discount = productDiscount;
                 return product.save();

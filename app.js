@@ -7,10 +7,12 @@ const User = require('./models/user')
 
 const session = require('express-session')
 const mongoDbStore = require('connect-mongodb-session')(session)
-const MONGODBURI = 'mongodb+srv://ahmedsayed11724:y288VUXvj7P7ETGw@cluster0.uw7wrww.mongodb.net/try?w=majority&appName=Cluster0'
+const MONGODBURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.uw7wrww.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?w=majority&appName=Cluster0`
 const mongoose = require('mongoose')
 const csrf = require('csurf')
 const flash = require('connect-flash')
+const helmet = require('helmet')
+const compression = require('compression')
 
 const adminData = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
@@ -51,6 +53,9 @@ app.use(session({
 }))
 app.use(csrfProtection)
 app.use(flash());
+app.use(helmet())
+// app.use(compression())
+
 app.use((req, res, next)=>{
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();
@@ -81,7 +86,7 @@ app.use(shopRoutes.routes);
 
 mongoose.connect(MONGODBURI)
 .then(result => {
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
 })
 .catch(err=>{
     console.log(err);
