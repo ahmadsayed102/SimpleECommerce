@@ -52,31 +52,7 @@ body {
   color: white;
 }
 
-/* Responsive Navbar */
-@media (max-width: 768px) {
-  .navbar ul {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px; /* Adjust according to navbar height */
-      left: 0;
-      width: 100%;
-      background-color: #333;
-      padding: 10px 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
 
-  .navbar ul.show {
-      display: flex;
-  }
-
-  .navbar .menu-toggle {
-      display: block;
-      font-size: 1.5em;
-      cursor: pointer;
-      color: white;
-  }
-}
 
 .menu-toggle {
   display: none;
@@ -141,3 +117,29 @@ body {
           text-align: center;
         }
         
+
+        /* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* Adjust according to navbar height */
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar ul.show {
+      display: flex;
+  }
+
+  .navbar .menu-toggle {
+      display: block;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: white;
+  }
+}

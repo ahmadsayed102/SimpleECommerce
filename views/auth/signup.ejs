@@ -10,21 +10,17 @@
             <div class="user-message user-message--error"><%= errorMessage %></div>
         <% }%>   
         <div class="signin-container">
-
-
-
-            
         <form class="signin-form" action="/signup" method="POST" novalidate>
             <h2>Sign Up</h2>
             <div class="form-group">
                 <i class="fas fa-user"></i>
-                <input type="text" name="name" id="name" value="<%= oldInput.name %>" placeholder="User name">
+                <input type="text" name="name" id="name" value="<%= oldInput.name %>" placeholder="User name" autocomplete="on">
             </div>
             <div class="form-group">
                 <i class="fas fa-user"></i>
                 <input 
                 class="<%= errors.find(e=> e.path === 'email') ? 'invalid' : '' %>"
-                type="email" name="email" id="email" value="<%= oldInput.email %>" placeholder="Email">
+                type="email" name="email" id="email" value="<%= oldInput.email %>" placeholder="Email" autocomplete="on">
             </div>
             <div class="form-group">
                 <i class="fas fa-lock"></i>
